@@ -5,6 +5,7 @@
 #include <msclr/marshal_cppstd.h>
 #include <winsock2.h>
 #include <stdio.h>
+#include <iostream>
 namespace Client {
 
 	using namespace System;
@@ -189,7 +190,6 @@ namespace Client {
 			if (receivedValue == 2) {
 				this->switchToGame = true;
 				this->Close();
-
 			}
 		}
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -19,6 +19,28 @@ using namespace System::Runtime::InteropServices;
 
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "27015"
+
+void AfiseazaFereastraExterna()
+{
+    // Calea către fișierul .exe al ferestrei Windows Forms
+    const wchar_t* caleExe = L"TABLE.exe";
+
+    // Lansați fereastra .exe folosind CreateProcess
+    STARTUPINFO si = { sizeof(STARTUPINFO) };
+    PROCESS_INFORMATION pi;
+    if (CreateProcess(caleExe, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+    {
+        // Așteptați până când fereastra .exe se închide (opțional)
+        WaitForSingleObject(pi.hProcess, INFINITE);
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+    }
+    else
+    {
+        // Tratați cazul în care lansarea fereastrei .exe a eșuat
+        // MessageBox::Show("Nu am putut lansa fereastra .exe");
+    }
+}
 
 int main(array<String^>^ args)
 {
@@ -104,8 +126,9 @@ int main(array<String^>^ args)
             Client::MainForm^ mainForm = gcnew Client::MainForm(user, ConnectSocket);
             mainForm->ShowDialog();
             if (mainForm->switchToGame) {
-                Client::GameForm^ gamef = gcnew Client::GameForm(ConnectSocket);
-                gamef->ShowDialog();
+                //Client::GameForm^ gamef = gcnew Client::GameForm(ConnectSocket);
+                //gamef->ShowDialog();
+                AfiseazaFereastraExterna();
             }
         }
         if (loginF->switchToRegister == 1) {

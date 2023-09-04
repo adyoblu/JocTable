@@ -48,7 +48,6 @@ DWORD WINAPI ProcessClient(LPVOID lpParameter)
     int bytesRecv = SOCKET_ERROR;
     char sendbuf[2000] = "";
     char recvbuf[2000] = "";
-
     char timebuf[128];
 
    
@@ -82,7 +81,6 @@ DWORD WINAPI ProcessClient(LPVOID lpParameter)
         {
             std::string email = jsonData["mail"].asString();
             std::string password = jsonData["password"].asString();
-
             //verificare cont in baza de date
 
             User^ user = gcnew User;
@@ -116,7 +114,7 @@ DWORD WINAPI ProcessClient(LPVOID lpParameter)
 
 
 
-            String^ connString = "Data Source=DESKTOP-OIGQPEQ;Initial Catalog=BDPOO;Integrated Security=True";
+            String^ connString = "Data Source=DESKTOP-QOIBUPL;Initial Catalog=table;Integrated Security=True";
             SqlConnection sqlConn(connString);
             sqlConn.Open();
 
@@ -310,7 +308,7 @@ int Verify(User^% user, std::string mail, std::string password) {
         return -1;
     }
     try {
-        String^ connString = "Data Source=DESKTOP-OIGQPEQ;Initial Catalog=BDPOO;Integrated Security=True";
+        String^ connString = "Data Source=DESKTOP-QOIBUPL;Initial Catalog=table;Integrated Security=True";
         SqlConnection sqlConn(gcnew String(connString));
         sqlConn.Open();
 
@@ -320,6 +318,8 @@ int Verify(User^% user, std::string mail, std::string password) {
 
         command.Parameters->AddWithValue("@mail", gcnew String(mail.c_str()));
         command.Parameters->AddWithValue("@pwd", gcnew String(password.c_str()));
+       
+
         SqlDataReader^ reader = command.ExecuteReader();
         if (reader->Read()) {
             user->id = reader->GetInt32(0);

@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TABLE.exe" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
