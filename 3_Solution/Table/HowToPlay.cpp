@@ -22,8 +22,8 @@ END_MESSAGE_MAP()
 BOOL CHowToPlay::OnInitDialog() 
 {
 	CDialog::OnInitDialog();	
-	m_edit_string = "\t\t\tCUM SE JOACA Net Backgammon\r\n\tNetBackgammon este un joc de Backgammon care poate fi jucat intre doi jucatori pe aceeasi "
-		"tabla sau prin LAN, intranet folosind comunicarea TCP/IP. Jocul de Backgammon se joaca pe o tabla "
+	m_edit_string = "\t\t\tCUM SE JOACA TABLE\r\n\tTABLE este un joc care poate fi jucat intre doi jucatori pe aceeasi "
+		"tabla sau prin LAN, intranet folosind comunicarea TCP/IP. Jocul de table se joaca pe o tabla "
 		"intre doi jucatori. Tabla consta in 24 de puncte sau triunghiuri inguste in culori alternative"
 		"(Alege culoarea triunghiurilor din Edit->Optiuni)."
 		" Aceste puncte sunt impartite in patru cadranuri. Aceste cadranuri sunt numite tabla de acasa si "

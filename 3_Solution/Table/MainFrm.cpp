@@ -1,9 +1,10 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "NetChess.h"
 #include "MainFrm.h"
 #include "NetChessDoc.h"
 #include "NetChessView.h"
 
+// implementa funcționalitatea de creare dinamică a ferestrei principale
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
@@ -39,6 +40,7 @@ CMainFrame::~CMainFrame()
 {
 }
 
+//Creează și încarcă bara de instrumente (toolbar)
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
@@ -73,6 +75,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+// folosită pentru a configura proprietățile ferestrei,
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style = WS_OVERLAPPED | WS_SYSMENU | WS_BORDER|WS_MINIMIZE;
@@ -88,45 +91,14 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 void CMainFrame::OnViewHide() 
 {
-	CNetChessView* pView = (CNetChessView*)GetActiveView();
-	if(pView->m_timerFlag == false)
-	{
-		ShowTrayIcon(NIM_ADD,IDR_MAINFRAME,0);		
-	}
-	this->ShowWindow(SW_HIDE);
 	 
 }
+//Aceasta răspunde la evenimentele de clic (stânga, dreapta) asupra iconiței din caseta de sistem și efectuează acțiuni 
+//precum afișarea sau ascunderea ferestrei principale, sau afișarea unui meniu contextual.
 LRESULT CMainFrame::OnShellNotify(WPARAM wParam,LPARAM lParam)
 {
  
-	switch(lParam)
-	{
-		case WM_LBUTTONDOWN:
-				this->ShowWindow(SW_SHOW);
-			break;
-		case WM_LBUTTONUP:
-			{	
-				CNetChessView* pView = (CNetChessView*)GetActiveView();
-		 
-				if(pView->m_timerFlag == true)
-				{
-					pView->KillTimerEvent();					 
-				}
-				ShowTrayIcon(NIM_DELETE,IDR_MAINFRAME,0);				 
-			}
-			break;
-		case WM_RBUTTONDOWN:
-			{
-				CRect rect;
-				GetWindowRect(rect);
-				CMenu menu;
-				menu.LoadMenu(IDR_SHELL_MENU);
-				CMenu *pMenu = menu.GetSubMenu(0);
-				pMenu->TrackPopupMenu(TPM_LEFTALIGN |
-				TPM_LEFTBUTTON | TPM_RIGHTBUTTON,rect.bottom,rect.right ,this);
-			}
-			break;
-	}
+	
 	return 0;
 } 
 
@@ -174,21 +146,10 @@ void CMainFrame::OnShellClose()
 
 void CMainFrame::OnShellView() 
 {
-	ShowTrayIcon(NIM_ADD,IDR_MAINFRAME,0);
-	this->ShowWindow(SW_SHOW);	
 }
 void CMainFrame::ShowTrayIcon(DWORD message,int icon,int input)
 {
-	NOTIFYICONDATA nicondata;
-	char data[64] = "NetChess";
-	nicondata.hWnd = this->GetSafeHwnd();;
-	nicondata.uID = 10;
-	nicondata.uFlags = NIF_ICON |NIF_MESSAGE | NIF_TIP; 
-	nicondata.cbSize = sizeof(nicondata);
-	nicondata.uCallbackMessage = MY_MESSAGE_SHELLNOTIFY;
-	nicondata.hIcon = AfxGetApp()->LoadIcon(icon);
-	strcpy(nicondata.szTip,data);
-	Shell_NotifyIcon(message,&nicondata);
+
 
 }
 
